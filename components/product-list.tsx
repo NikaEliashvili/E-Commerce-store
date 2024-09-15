@@ -19,7 +19,7 @@ const ProductList: React.FC<ProductListProps> = ({ title, items = [], type="grid
       {items.length === 0 && <NoResults />}
       <div className={cn((type === "grid" && gridClassNames) || (type === "scroll" && scrollClassNames),)}>
         {items.map((item) => (
-          <ProductCard key={item.id} data={item} className="snap-start shrink-0 w-44 h-full " />
+          <ProductCard key={item.id} data={item} className={cn("snap-start shrink-0",type === "scroll" ? "w-44 h-full" : "" )} />
         ))}
       </div>
     </div>
