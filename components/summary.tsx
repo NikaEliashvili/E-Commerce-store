@@ -1,32 +1,41 @@
 "use client";
 
 import axios from "axios";
-import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import Button from "@/components/ui/button";
 import Currency from "@/components/ui/currency";
 import useCart from "@/hooks/use-cart";
 import toast from "react-hot-toast";
-import { useRouter } from "next/navigation";
 
 const Summary = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const { items, removeAll } = useCart();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const hasShownSuccessMessage = useRef(false); // Ref to track if success message has been shown
 
   useEffect(() => {
-    if (searchParams.get("success")) {
+    if (hasShownSuccessMessage.current) {
+      return;
+    }
+    const success = searchParams.get("success");
+    const canceled = searchParams.get("canceled");
+
+    if (success === "1") {
+      hasShownSuccessMessage.current = true; // Set the ref to true after showing the message
       toast.success("Payment completed.");
       removeAll();
-      router.push(window.location.pathname);
     }
-    if (searchParams.get("canceled")) {
+
+    if (canceled === "1") {
+      hasShownSuccessMessage.current = true;
       toast.error("Oops! Something went wrong.");
-      router.push(window.location.pathname);
     }
-  }, [searchParams, removeAll]);
+
+    router.replace("/cart");
+  }, [searchParams, removeAll, router]);
 
   const totalPrice = useMemo(() => {
     return items.reduce((total, item) => total + Number(item.price), 0);
@@ -50,7 +59,7 @@ const Summary = () => {
   };
 
   return (
-    <div className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:p-0">
+    <div className="mt-16 rounded-lg bg-gray-50 px-4 py-6 sm:p-6 lg:col-span-5 lg:mt-0 lg:px-6 lg:py-4">
       <h2 className="text-lg font-medium text-gray-900">Order Summary</h2>
       <div className="mt-6 space-y-4">
         <div className="flex items-center justify-between border-t border-gray-200 pt-4">
