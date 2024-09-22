@@ -8,6 +8,7 @@ import Button from "@/components/ui/button";
 import Currency from "@/components/ui/currency";
 import useCart from "@/hooks/use-cart";
 import toast from "react-hot-toast";
+import { Loader, LoaderCircle } from "lucide-react";
 
 const Summary = () => {
   const searchParams = useSearchParams();
@@ -70,9 +71,12 @@ const Summary = () => {
       <Button
         onClick={onCheckout}
         disabled={!items?.length || isLoading}
-        className="w-full mt-6"
+        className="w-full mt-6 flex items-center justify-center relative"
       >
-        Checkout {isLoading && "..."}
+        Checkout {isLoading && "... "}
+        {isLoading && (
+          <LoaderCircle className="absolute right-4 size-5 animate-spin" />
+        )}
       </Button>
     </div>
   );
