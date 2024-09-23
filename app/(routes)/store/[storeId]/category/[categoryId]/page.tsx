@@ -44,7 +44,7 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
   return (
     <div className="bg-white px-4 sm:px-6 lg:px-8 pt-4">
       <Container>
-        <Billboard data={category.billboard} />
+        {category.billboard && <Billboard data={category.billboard} />}
         <div className="mt-8 pb-24">
           <div className="lg:grid lg:grid-cols-5 lg:gap-x-8">
             {/* Add a mobile filters */}
