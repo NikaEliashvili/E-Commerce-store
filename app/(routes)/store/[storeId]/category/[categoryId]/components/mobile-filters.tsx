@@ -5,7 +5,7 @@ import { Color, Size } from "@/types";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import { Plus, X } from "lucide-react";
 
-import Button from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import IconButton from "@/components/ui/icon-button";
 
 import Filter from "./filter";

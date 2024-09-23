@@ -1,5 +1,6 @@
 export interface Billboard {
   id: string;
+  storeId?: string;
   label: string;
   imageUrl: string;
 }
@@ -15,7 +16,6 @@ export interface Image {
   url: string;
 }
 
-
 export interface Size {
   id: string;
   name: string;
@@ -28,7 +28,6 @@ export interface Color {
   value: string;
 }
 
-
 export interface Product {
   id: string;
   category: Category;
@@ -38,4 +37,13 @@ export interface Product {
   size: Size;
   color: Color;
   images: Image[];
+}
+
+export interface Store {
+  id: string;
+  name: string;
+  userId: string;
+  createdAt: string;
+  updatedAt: string;
+  billboards?: Billboard[];
 }

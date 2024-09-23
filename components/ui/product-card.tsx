@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { MouseEventHandler } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { Expand, ShoppingCart } from "lucide-react";
 
 import { Product } from "@/types";
@@ -19,11 +19,12 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ data, className }) => {
   const { onOpen } = usePreviewModal();
+  const params = useParams();
   const { addItem: addItemInCart } = useCart();
   const router = useRouter();
 
   const handleClick = () => {
-    router.push(`/product/${data?.id}`);
+    router.push(`/store/${params?.storeId}/product/${data?.id}`);
   };
 
   const onPreview: MouseEventHandler<HTMLButtonElement> = (e) => {
@@ -49,6 +50,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data, className }) => {
           alt="Image"
           src={data?.images?.[0].url}
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="aspect-square object-cover rounded-md"
         />
         <div className="absolute transition-opacity bg-transparent px-6 w-full bottom-5 opacity-0 group-hover:opacity-100">

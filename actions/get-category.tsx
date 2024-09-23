@@ -1,9 +1,16 @@
 import { Category } from "@/types";
 
-const URL = `${process.env.NEXT_PUBLIC_API_URL}/categories`;
+const URL = `${process.env.NEXT_PUBLIC_API_URL}`;
 
-const getCategory = async (id: string): Promise<Category> => {
-  const res = await fetch(`${URL}/${id}`);
+interface CategoryProps {
+  storeId: string;
+  categoryId: string;
+}
+
+const getCategory = async (props: CategoryProps): Promise<Category> => {
+  const res = await fetch(
+    `${URL}/${props.storeId}/categories/${props.categoryId}`
+  );
   return res.json();
 };
 

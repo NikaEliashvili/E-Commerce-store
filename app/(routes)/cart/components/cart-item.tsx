@@ -24,6 +24,7 @@ const CartItem: React.FC<CartItemProps> = ({ data }) => {
       <div className="relative size-24 rounded-md overflow-hidden sm:size-48">
         <Image
           fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           src={data.images[0]?.url}
           alt={`${data.name}`}
           className="object-cover object-center"

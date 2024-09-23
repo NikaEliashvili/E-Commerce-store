@@ -1,6 +1,6 @@
 import getCategory from "@/actions/get-category";
 import getColors from "@/actions/get-colors";
-import getProducts from "@/actions/get-products";
+import { getProductsByStore } from "@/actions/get-products";
 import getSizes from "@/actions/get-sizes";
 import Billboard from "@/components/billboard";
 import Container from "@/components/ui/container";
@@ -14,6 +14,7 @@ export const revalidate = 0;
 
 interface CategoryPageProps {
   params: {
+    storeId: string;
     categoryId: string;
   };
   searchParams: {
@@ -26,21 +27,25 @@ const CategoryPage: React.FC<CategoryPageProps> = async ({
   params,
   searchParams,
 }) => {
-  const products = await getProducts({
+  const products = await getProductsByStore({
+    storeId: params.storeId,
     categoryId: params.categoryId,
     colorId: searchParams.colorId,
     sizeId: searchParams.sizeId,
   });
 
-  const sizes = await getSizes();
-  const colors = await getColors();
-  const category = await getCategory(params.categoryId);
+  const sizes = await getSizes(params.storeId);
+  const colors = await getColors(params.storeId);
+  const category = await getCategory({
+    storeId: params.storeId,
+    categoryId: params.categoryId,
+  });
 
   return (
-    <div className="bg-white">
+    <div className="bg-white px-4 sm:px-6 lg:px-8 pt-4">
       <Container>
         <Billboard data={category.billboard} />
-        <div className="px-4 sm:px-6 lg:px-8 pb-24">
+        <div className="mt-8 pb-24">
           <div className="lg:grid lg:grid-cols-5 lg:gap-x-8">
             {/* Add a mobile filters */}
             <MobileFilters sizes={sizes} colors={colors} />
