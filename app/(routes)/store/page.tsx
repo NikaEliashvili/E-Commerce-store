@@ -7,7 +7,7 @@ const StorePage = () => {
   const router = useRouter();
   useEffect(() => {
     router.push("/");
-  }, []);
+  }, [router]);
   return null;
 };
 

@@ -16,11 +16,10 @@ interface StoreCardProps {
 const StoreCard: React.FC<StoreCardProps> = ({ data, className }) => {
   const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
-  const billboards = data?.billboards || [];
-  const randomBillboard = useMemo(
-    () => billboards?.[Math.floor(Math.random() * billboards.length)],
-    []
-  );
+  const randomBillboard = useMemo(() => {
+    const billboards = data?.billboards || [];
+    return billboards?.[Math.floor(Math.random() * billboards.length)];
+  }, [data?.billboards]);
 
   const handleClick = () => {
     router.push(`/store/${data?.id}`);
@@ -30,7 +29,7 @@ const StoreCard: React.FC<StoreCardProps> = ({ data, className }) => {
     if (!isMounted) {
       setIsMounted(true);
     }
-  }, []);
+  }, [isMounted]);
 
   if (!isMounted) {
     return null;
