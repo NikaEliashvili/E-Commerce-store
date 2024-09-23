@@ -55,7 +55,7 @@ export default function CategorySwitcher({
         value: item.href,
         id: item.routeId,
       })),
-    [items]
+    [filteredCategories]
   );
 
   const currentCategory = useMemo(

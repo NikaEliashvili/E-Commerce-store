@@ -7,7 +7,7 @@ const CategoryPage = () => {
   const router = useRouter();
   useEffect(() => {
     router.push("/");
-  }, []);
+  }, [router]);
   return null;
 };
 
