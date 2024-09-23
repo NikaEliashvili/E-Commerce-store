@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import { useParams, useRouter } from "next/navigation";
 import { PopoverTrigger, PopoverTriggerProps } from "@radix-ui/react-popover";
@@ -21,13 +21,15 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
-import { useCategoryModal } from "@/hooks/use-category-modal";
 import { Button } from "@/components/ui/button";
 
 interface routeProps {
+  routeId: string;
   href: string;
   label: string;
   active: boolean;
+  storeName?: string;
+  storeId?: string;
 }
 
 interface CategorySwircherProps extends PopoverTriggerProps {
@@ -38,23 +40,37 @@ export default function CategorySwitcher({
   className,
   items = [],
 }: CategorySwircherProps) {
-  const { isOpen, onClose, onOpen } = useCategoryModal();
   const [open, setOpen] = useState<boolean>(false);
   const params = useParams();
   const router = useRouter();
 
-  const formattedItems = items.map((item) => ({
-    label: item.label,
-    value: item.href,
-  }));
+  const filteredCategories = items.filter(
+    (item) => item.storeId === params.storeId
+  );
 
-  const currentCategory = formattedItems.find(
-    (item) => item.value === params.routeId
+  const formattedItems = useMemo(
+    () =>
+      filteredCategories.map((item) => ({
+        label: item.label,
+        value: item.href,
+        id: item.routeId,
+      })),
+    [items]
+  );
+
+  const currentCategory = useMemo(
+    () => formattedItems.find((item) => item.id === params.categoryId),
+    [formattedItems, params.categoryId]
   );
 
   const onCategorySelect = (route: { value: string; label: string }) => {
     setOpen(false);
     router.push(`${route.value}`);
+  };
+
+  const clearCategory = () => {
+    setOpen(false);
+    router.push(`/store/${params.storeId}`);
   };
 
   return (
@@ -77,8 +93,9 @@ export default function CategorySwitcher({
           <CommandList>
             <CommandInput placeholder="Search a route..." />
             <CommandEmpty>No Category Found.</CommandEmpty>
-            <CommandGroup heading="Categorys">
-              {formattedItems.map((route) => (
+
+            <CommandGroup heading="Categories">
+              {formattedItems?.map((route) => (
                 <CommandItem
                   key={route.value}
                   onSelect={() => onCategorySelect(route)}
@@ -97,6 +114,13 @@ export default function CategorySwitcher({
                 </CommandItem>
               ))}
             </CommandGroup>
+            {currentCategory && (
+              <CommandItem onSelect={clearCategory}>
+                <Button className="ml-auto" variant="outline">
+                  Clear
+                </Button>
+              </CommandItem>
+            )}
           </CommandList>
           <CommandSeparator />
         </Command>

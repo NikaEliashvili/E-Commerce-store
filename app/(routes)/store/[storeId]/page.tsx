@@ -1,17 +1,8 @@
 import getBillboards from "@/actions/get-billboards";
 import { getProductsByStore } from "@/actions/get-products";
-import Billboard from "@/components/billboard";
 import BillboardCarousel from "@/components/billboard-carousel";
 import ProductList from "@/components/product-list";
 import Container from "@/components/ui/container";
-import {
-  AlignLeft,
-  ArrowLeft,
-  ArrowLeftCircle,
-  ArrowRight,
-  MoveLeft,
-  MoveLeftIcon,
-} from "lucide-react";
 import React from "react";
 
 const StorePage = async ({ params }: { params: { storeId: string } }) => {

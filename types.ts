@@ -8,7 +8,8 @@ export interface Billboard {
 export interface Category {
   id: string;
   name: string;
-  billboard: Billboard;
+  billboard?: Billboard;
+  store?: Store;
 }
 
 export interface Image {
