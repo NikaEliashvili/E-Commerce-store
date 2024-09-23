@@ -60,7 +60,7 @@ const StoreCard: React.FC<StoreCardProps> = ({ data, className }) => {
           className="aspect-square object-cover rounded-md"
         />
         <div
-          className="absolute inset-0 m-auto w-fit h-fit flex items-center justify-center font-bold border-dashed border backdrop-blur-sm text-2xl sm:text-xl text-slate-100 px-2 rounded-md leading-[48px] max-w-[60%]
+          className="absolute inset-0 p-1 m-auto w-fit h-fit flex items-center justify-center font-bold border-dashed border backdrop-blur-sm text-2xl sm:text-xl text-slate-100 px-2 rounded-md max-w-[60%]
           shadow-[inset_0_0_3px_1px_rgba(0,0,0,0.125)] text-center group-hover:opacity-0 transition duration-1000"
         >
           {randomBillboard.label}
