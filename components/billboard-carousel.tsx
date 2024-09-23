@@ -16,7 +16,6 @@ const BillboardCarousel: React.FC<BillboardCarouselProps> = ({
   const [active, setActive] = useState(0);
 
   useEffect(() => {
-    console.log(ref.current, active);
     if (ref.current) {
       ref.current.scrollTo({
         left: active * ref.current.clientWidth,

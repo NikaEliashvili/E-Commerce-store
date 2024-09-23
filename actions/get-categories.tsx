@@ -21,8 +21,6 @@ export const getCategoriesByStore = async (
 
 export const getAllCategories = async (): Promise<Category[]> => {
   try {
-    console.log(`${URL}/categories`);
-
     const res = await fetch(`${URL}/categories`);
 
     if (!res.ok) {

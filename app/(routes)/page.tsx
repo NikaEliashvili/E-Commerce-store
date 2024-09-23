@@ -9,7 +9,6 @@ export const revalidate = 0;
 const HomePage = async () => {
   const products = await getAllProducts();
   const stores = await getStores();
-  console.log({ products });
 
   return (
     <>
